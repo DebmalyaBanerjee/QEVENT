@@ -7,7 +7,7 @@ const EventCard = ({ eventData }) => {
   return (
     <div className="hover-inverse w-[30%] h-fit group transform transition-transform duration-400 hover:scale-110 hover:bg-gradient-to-r hover:from-orange-200 hover:to-white text-dark m-4 border-slate-400 border rounded-md px-8 py-2.5">
       <Link
-        href={`#`}
+        href={`/events/${eventData.id}`}
         className="rounded-md text-dark flex-shrink-0 scroll-snap-card p-4"
       >
         <div>
@@ -17,9 +17,12 @@ const EventCard = ({ eventData }) => {
             alt="Bonnie image"
           />
           <div className="flex gap-2 items-center">
-            {eventData.tags.map((tag) => (
-              <Tag text={tag} key={tag} />
-            ))}
+            {/* Ensure tags is always an array */}
+            {Array.isArray(eventData?.tags) && eventData?.tags.length > 0 ? (
+              eventData.tags.map((tag) => <Tag text={tag} key={tag} />)
+            ) : (
+              <span>No tags available</span> // Optional fallback message
+            )}
           </div>
           <p className="mt-5 mb-10">
             {new Date(eventData.date).toDateString()} | {eventData.time}
