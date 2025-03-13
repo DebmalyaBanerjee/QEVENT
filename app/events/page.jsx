@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import EventCard from "@/components/EventCard";
 import { useSearchParams } from "next/navigation";
 
-function EventPage() {
+function EventList() {
   const searchParams = useSearchParams();
   const tagQuery = searchParams.get("tag");
   const artistQuery = searchParams.get("artist");
@@ -59,4 +59,10 @@ function EventPage() {
   );
 }
 
-export default EventPage;
+export default function EventPage() {
+  return (
+    <Suspense fallback={<div>Loading events...</div>}>
+      <EventList />
+    </Suspense>
+  );
+}
